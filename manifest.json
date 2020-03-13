@@ -1,0 +1,31 @@
+{
+	"manifest_version" : 2,
+	"name" : "UTF-8 Hack",
+	"description" : "Extension to generate nonsensical UTF-8 text",
+	"version" : "1.0",
+	"browser_action" : {
+		"default_title" : "UTF-8 Hack",
+		"default_icon" : "icon.png",
+		"default_popup" : "popup.html"
+	},
+	"icons" : {
+		"16" : "icon16.png",
+		"48" : "icon48.png",
+		"128" : "icon128.png"
+  },
+  "background" : {
+    "scripts" : ["event_script.js"],
+    "persistent" : false
+  },
+  "permissions" : ["storage"],
+  "options_ui": {
+    "page": "optionsPage.html",
+    "chrome_style" : true
+  },
+  "commands" : {
+		"copy text" : {
+			"suggested_key" : {"default" : "Alt+Shift+2"},
+			"description" : "Copy Text"
+		}
+	}
+}
