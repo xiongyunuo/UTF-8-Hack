@@ -22,8 +22,9 @@ chrome.runtime.onMessage.addListener((msg, _, response) => {
   }
 });
 
-let keys = ["number", "deviation", "overlay", "double", "space", "english"];
-let defaults = [10, 0, 0.5, 0.5, false, true];
+let keys = ["number", "deviation", "overlay", "double", "space", "english", "chaotic", "upper"];
+let defaults = [10, 0, 0.5, 0.5, false, true, true, 0.5];
+
 for (let i = 0; i < keys.length; i++) {
   chrome.storage.sync.get(keys[i], items => {
     if (items[keys[i]] === undefined) {

@@ -7,7 +7,7 @@ let message = "Copy";
 let message2 = "Get Text";
 let message3 = "Text";
 let message4 = "Save";
-let keys = ["number", "deviation", "overlay", "double", "space", "english"];
+let keys = ["number", "deviation", "overlay", "double", "space", "english", "chaotic", "upper"];
 let values = [];
 
 const stringFromUTF8Array = function(data) {
@@ -57,8 +57,28 @@ const randomIntegerFromGroup = function(groups) {
   return [groups[index][2], randomInteger(groups[index][0], groups[index][1])];
 };
 
+const randomUpperAccent = function() {
+  return randomIntegerFromGroup([[0x80, 0x94, 0xcc]]);
+};
+
+const randomLowerAccent = function() {
+  return randomIntegerFromGroup([[0xa9, 0xb3, 0xcc]]);
+};
+
+const allAccents = [[0x80, 0xb3, 0xcc], [0xb9, 0xbf, 0xcc], [0x80, 0x9b, 0xcd], [0xa3, 0xaf, 0xcd]];
+const accents = [[0x80, 0x95, 0xcc], [0x9a, 0x9b, 0xcc], [0xbd, 0xbf, 0xcc], [0x80, 0x84, 0xcd], [0x86, 0x86, 0xcd], [0x8a, 0x8c, 0xcd], [0x90, 0x92, 0xcd], [0x97, 0x98, 0xcd], [0x9b, 0x9b, 0xcd], [0x9d, 0x9e, 0xcd], [0xa0, 0xa1, 0xcd], [0xa3, 0xaf, 0xcd]];
+const accents2 = [[0x96, 0x99, 0xcc], [0x9c, 0xb3, 0xcc], [0xb9, 0xbc, 0xcc], [0x85, 0x85, 0xcd], [0x87, 0x89, 0xcd], [0x8d, 0x8f, 0xcd], [0x93, 0x96, 0xcd], [0x99, 0x9a, 0xcd], [0x9c, 0x9c, 0xcd], [0x9f, 0x9f, 0xcd], [0xa2, 0xa2, 0xcd]];
+
 const randomAccent = function() {
-  return randomIntegerFromGroup([[0x80, 0xb3, 0xcc], [0xb9, 0xbf, 0xcc], [0x80, 0x9b, 0xcd], [0xa3, 0xaf, 0xcd]]);
+  return randomIntegerFromGroup(allAccents);
+};
+
+const randomAccent2 = function() {
+  return randomIntegerFromGroup(accents);
+};
+
+const randomAccent3 = function() {
+  return randomIntegerFromGroup(accents2);
 };
 
 const randomOverlay = function() {
@@ -95,8 +115,24 @@ const generateSpam = function(value) {
         pushAccent(array, randomDouble());
       }
       let number = values[0] + (Math.random() * 2 - 1) * values[1];
+      let number2 = number * values[7];
       for (let j = 0; j < number; j++) {
-        pushAccent(array, randomAccent());
+        if (j < number2) {
+          if (!values[6]) {
+            pushAccent(array, randomUpperAccent());
+          }
+          else {
+            pushAccent(array, randomAccent2());
+          }
+        }
+        else {
+          if (!values[6]) {
+            pushAccent(array, randomLowerAccent());
+          }
+          else {
+            pushAccent(array, randomAccent3());
+          }
+        }
       }
     }
     return stringFromUTF8Array(array);
